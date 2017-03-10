@@ -1,0 +1,183 @@
+---
+title: "Exploratory Data Analysis - Loan Data"
+output:
+  html_document: html_document
+  html_notebook: html_notebook
+---
+
+
+# Packages requiered
+
+These packages are requiered for this EDA. To install, please execute the following code.
+
+*install.packages("knitr", dependencies = T)*
+*install.packages("dplyr", dependencies = T)*
+*install.packages("ggplot2", dependencies = T)*
+*install.packages("RColorBrewer", dependencies = T)* 
+*install.packages('ggthemes', dependencies = TRUE)* 
+
+
+```{r}
+library("knitr")
+library("dplyr")
+library("ggplot2")
+library("RColorBrewer")
+library("ggthemes")
+```
+
+# Set directory path
+
+```{r}
+getwd()
+setwd('/Users/aguijarro/SoftwareCode/github.com/aguijarro/R/Project')
+getwd()
+list.files()
+```
+
+# Load data
+
+```{r}
+loanData <- read.csv('prosperLoanData.csv')
+```
+
+# Get dim data
+
+```{r}
+dim(loanData)
+```
+
+# Explore some data
+
+```{r}
+head(loanData,5)
+tail(loanData,5)
+```
+
+# Get column types
+
+```{r}
+lapply(loanData, typeof)
+
+```
+
+# Display the estructure of the object
+
+```{r}
+str(loanData)
+summary(loanData)
+```
+
+# Notes
+
+When we use typeof function to get the data type of column, the result in some cases are integer, meanwhile, using str function the result is a Factor.
+
+For example: 
+
+typeof()
+$ListingCreationDate
+[1] "integer"
+
+str()
+$ ListingCreationDate                : Factor w/ 113064 levels 
+
+# Analysis Date Variables
+
+Transform to Date
+-----------------
+```{r}
+ListingCreationDate<-as.Date(loanData$ListingCreationDate)
+```
+
+Get and Create Listing Creation Date - Years
+---------------------------------------------
+```{r}
+ListingCreationYear<-format(ListingCreationDate, "%Y")
+loanData$ListingCreationYear <- as.factor(as.numeric(ListingCreationYear))
+```
+
+Get and Create Listing Creation Date - Months
+---------------------------------------------
+```{r}
+ListingCreationMonth<-format(ListingCreationDate, "%m")
+loanData$ListingCreationMonth <- as.factor(as.numeric(ListingCreationMonth))
+```
+
+Get and Create Listing Creation Date - Days
+---------------------------------------------
+```{r}
+ListingCreationDay<-format(ListingCreationDate, "%d")
+loanData$ListingCreationDay <- as.factor(as.numeric(ListingCreationDay))
+```
+
+
+
+Graph Listing Creation Date - Days
+-----------------------------------
+
+```{r}
+qplot(data = loanData, x = ListingCreationDay) + 
+  scale_x_discrete(breaks=1:31)
+```
+
+```{r}
+qplot(data = loanData, x = ListingCreationDay) + 
+  scale_x_discrete(breaks=01:31) +
+  facet_wrap(~ListingCreationMonth, ncol=3)
+
+```
+
+
+
+Graph Listing Creation Date - Months
+-----------------------------------
+
+```{r}
+qplot(data = loanData, x = ListingCreationMonth) + 
+  scale_x_discrete(breaks=1:12)
+```
+
+```{r}
+qplot(data = loanData, x = ListingCreationMonth) + 
+  scale_x_discrete(breaks=1:12) +
+  facet_wrap(~ListingCreationYear, ncol=3)
+```
+
+
+Graph Listing Creation Date - Year
+-----------------------------------
+
+```{r}
+qplot(data = loanData, x = ListingCreationYear)
+```
+
+
+
+
+
+# Basic analysis
+
+```{r}
+
+```
+
+# Analyced factor variables
+
+```{r}
+table(loanData$EmploymentStatus)
+levels(loanData$EmploymentStatus)
+```
+
+# Graph factor variables
+
+```{r}
+loanDataOrder <- ordered(loanData$EmploymentStatus, levels = c("Employed", "Full-time", "Not available", "Not employed", "Other", "Part-time", "Retired", "Self-employed"))
+qplot(data = loanData, x = loanDataOrder) + 
+  scale_x_discrete(breaks=1:31)
+```
+
+# Analyzing ListingCreationDate variable
+```{r}
+
+loanData$ListingCreationDate
+
+```
