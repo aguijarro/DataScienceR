@@ -1,0 +1,430 @@
+---
+title: "Exploratory Data Analysis"
+author: "Andres Guijarro"
+date: "August 29, 2017"
+output: 
+      html_document:
+        css: mystyle.css
+---
+
+Introduction
+========================================================
+
+> **Prosper**:  is the country's first peer-to-peer lending marketplace. The company has provided more than $2,000,000,000 in loans. Loan interest rates range from 5.99% for the most credit worthy borrowers to 36.00% APR for consumers with lower credit ratings.  Borrowers can obtain loans from $2,000 up to $35,000. 
+
+* **Financialand social rewards:**  As a peer-to-peer lending site, Prosper allows individuals and groups to lend money to their peers. Lenders reap both social and financial benefits from lending as well as greater returns than they would receive from a bank. This encourages people to fund loan requests. Borrowers understand that their loan is funded by other peers, not a traditional banking institution.
+* **Easy rate retrieval:** Customers quickly find out their loan interest rate by providing basic information online. Those borrowers with higher credit scores typically receive lower interest rates.
+* **Simple funding process:** Customers quickly find out their loan interest rate by providing basic information online. Those borrowers with higher credit scores typically receive lower interest rates.
+* **No collateral required:** Borrowers from Prosper don’t need collateral in order to qualify for a loan. Their funding is based on credit history as well as a few additional criteria.
+* **Reputation:** Prosper is Americas first peer-to-peer lending company and has a reputation for being a trustworthy and dependable personal loan company.
+Best for People looking to refinance debt, individuals starting a business, consumers facing financial hardship and those looking to finance a major life event. Source (https://www.consumeraffairs.com/finance/prosper.html)
+
+> As a potential amateur investor, I will explore the borrower market (including the demographic segmentation and beyond) and try to let data tell some ‘behind scene’ stories about the borrowers, also the performance of Prosper in terms of the volume of listings by year and by area.  (This must be changed)
+
+Data Set Option
+========================================================
+
+> **Loan Data from Prosper**: Last update: 03/11/2014. This data set contains 113,937 loans with 81 variables on each loan, including loan amount, borrower rate (or interest rate), current loan status, borrower income, borrower employment status, borrower credit history, and the latest payment information.
+
+> To learn more about the data please visit this variable dictionary which explains the variables in the data set. https://docs.google.com/spreadsheets/d/1gDyi_L4UvIrLTEC6Wri5nbaMmkGmLQBk-Yx3z0XDEtI/edit#gid=0
+
+Research Questions
+========================================================
+
+* Analyzing loan bussiness in Prosper to understand the loan market by year,by usage of loan and by states
+
+* Exploring the borrower market(including the demographic segmentation and credit score) and indentify influential factors to prosper credit score.
+
+* Evaluating the lender market(investment frequency) and find out risk factors to lender yield  (This must be changed)
+
+
+Analysis
+========================================================
+
+> **Packages requiered**: These packages are requiered for this EDA. To install, please execute the following code.
+
+* install.packages("knitr", dependencies = T)
+* install.packages("devtools", dependencies = T)
+* install.packages("dplyr", dependencies = T)
+* install.packages("ggplot2", dependencies = T)
+* install.packages("RColorBrewer", dependencies = T) 
+* install.packages('ggthemes', dependencies = TRUE) 
+* install.packages('alr3', dependencies = TRUE)
+* install.packages('tidyr', dependencies = TRUE)
+* install.packages('reshape2', dependencies = TRUE)
+* install.packages('reshape', dependencies = TRUE)
+* require(devtools)
+* install_github('ramnathv/rCharts@dev')
+* install_github('ramnathv/rMaps')
+* install.packages("amps", dependencies = T)
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+# Load all of the packages that you end up using in your analysis in this code
+# chunk.
+
+# Notice that the parameter "echo" was set to FALSE for this code chunk. This
+# prevents the code from displaying in the knitted HTML output. You should set
+# echo=FALSE for all code chunks in your file, unless it makes sense for your
+# report to show the code that generated a particular plot.
+
+# The other parameters for "message" and "warning" should also be set to FALSE
+# for other code chunks once you have verified that each plot comes out as you
+# want it to. This will clean up the flow of your report.
+
+library("devtools")
+library("ggplot2")
+library("knitr")
+library("dplyr")
+library("RColorBrewer")
+library("ggthemes")
+library("alr3")
+library("tidyr")
+library("reshape2")
+library("reshape")
+library("maps")
+```
+
+```{r echo=FALSE, Load_the_Data}
+# Set directory path where the data is located
+setwd('/Users/aguijarro/SoftwareCode/github.com/aguijarro/R/ProjectEDA')
+
+# Load the Data
+loanData <- read.csv('prosperLoanData.csv')
+
+```
+
+# Describe Data
+
+This data set contains 113,937 loans with 81 variables.
+
+```{r echo=FALSE}
+# Get dim data
+
+dim(loanData)
+
+```
+
+The data set includes different kind of variables like loan amount, borrower rate (or interest rate), current loan status, borrower income, borrower employment status, borrower credit history, and the latest payment information. The variables are from different types.
+
+```{r echo=FALSE}
+# Display the estructure of the object
+
+summary(loanData)
+
+```
+
+# Univariate Plots Section
+
+> **Tip**: Describe what i need to do here.
+
+```{r echo=FALSE, Prepare_Univariate_Plots_Date}
+# Prepare date variables for analysis
+# Transform to Date: ListingCreationDate
+ListingCreationDate<-as.Date(loanData$ListingCreationDate)
+
+# Get and Create Listing Creation Date - Years
+ListingCreationYear<-format(ListingCreationDate, "%Y")
+loanData$ListingCreationYear <- as.factor(as.numeric(ListingCreationYear))
+
+# Get and Create Listing Creation Date - Months
+ListingCreationMonth<-format(ListingCreationDate, "%m")
+loanData$ListingCreationMonth <- as.factor(as.numeric(ListingCreationMonth))
+
+# Get and Create Listing Creation Date - Days
+ListingCreationDay<-format(ListingCreationDate, "%d")
+loanData$ListingCreationDay <- as.factor(as.numeric(ListingCreationDay))
+
+```
+
+## Listing by Geography Location
+### Listing By Borrower State
+> Analisis por ubicacion geografica
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots_Location}
+
+data(state)
+
+states <- data.frame(state.abb, state.name, state.area, state.center, state.division, state.region, state.x77)
+
+states <- rename(states, c("x"          = "state.x", 
+"y"          = "state.y", 
+"Population" = "state.population",
+"Income"     = "state.income",
+"Illiteracy" = "state.illiteracy",
+"Life.Exp"   = "state.life.exp",
+"Murder"     = "state.murder",
+"HS.Grad"    = "state.hs.grad",
+"Frost"      = "state.frost",
+"state.abb"  = "BorrowerState"))
+
+# Merge spurce data, state data 
+loanData <- merge(loanData, states, by=c("BorrowerState"))
+
+# colnames(loanData)
+
+ggplot(aes(x=state.x, y=state.y), data=loanData) +
+geom_point() 
+
+map <- map_data("state")
+states <- subset(states, ! state.abb %in% c("HI", "AK"))
+
+ggplot(data = map, aes(x = long, y = lat, group = group)) +
+# draw outlines of the state
+geom_polygon() + 
+geom_path(colour = 'gray', linestyle = 2) + 
+coord_map() +
+# state.x and state.y = center of each state, where we plot its abbreviation
+geom_text(data = states, aes(x     = state.x, 
+y     = state.y, 
+label = BorrowerState,
+group = NULL), 
+size = 4, 
+colour="white") +
+# us loans
+geom_jitter(data=loanData,aes(x=state.x, y=state.y, group=NULL), colour="yellow",alpha=0.8 ) 
+
+```
+
+
+## Group data by BorrowerState
+> Analisis por ubicacion geografica
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univ_Plots_Loc_Gpr_Bor_Sta_Md1}
+loanData.grp_borrower_state <- loanData %>%
+group_by(BorrowerState, tolower(state.name)) %>%
+summarize(LoanOriginalAmount_mean = mean(LoanOriginalAmount),
+LoanOriginalAmount_median = median(LoanOriginalAmount),
+n = n()) %>%
+arrange(desc(n))
+
+
+loanData.grp_borrower_state <- rename(loanData.grp_borrower_state, c("tolower(state.name)" = "state.name"))
+
+loanData.grp_borrower_state <- loanData.grp_borrower_state[1:5,]
+
+
+writeLines("td, th { padding : 6px } th { background-color : brown ; color : white; border : 1px solid white; } td { color : brown ; border : 1px solid brown }", con = "mystyle.css")
+knitr::kable(loanData.grp_borrower_state, format = "html")
+
+map1 <- map_data("state")
+map1 <- merge(map1, loanData.grp_borrower_state, by.x = c("region"), 
+by.y=c("state.name"), all.x=TRUE)
+map1 <- arrange(map1, order)
+
+ggplot(data = map1, aes(x = long, y = lat, group = group)) +
+geom_polygon(aes(fill = n)) +
+coord_map() +
+# state.x and state.y = center of each state, where we plot its abbreviation
+geom_text(data = states, aes(x     = state.x, 
+y     = state.y, 
+label = BorrowerState,
+group = NULL), size = 4, colour="white") +
+scale_fill_distiller(palette = "Spectral") +
+theme_bw()
+```
+
+> Analisis por ubicacion geografica
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univ_Plots_Loc_Gpr_Bor_Sta_Md2}
+
+
+loanData.grp_borrower_state <-arrange(loanData.grp_borrower_state, desc(LoanOriginalAmount_mean))
+
+writeLines("td, th { padding : 6px } th { background-color : brown ; color : white; border : 1px solid white; } td { color : brown ; border : 1px solid brown }", con = "mystyle.css")
+knitr::kable(loanData.grp_borrower_state, format = "html")
+
+
+ggplot(data = map1, aes(x = long, y = lat, group = group)) +
+geom_polygon(aes(fill = LoanOriginalAmount_mean)) +
+coord_map() +
+# state.x and state.y = center of each state, where we plot its abbreviation
+geom_text(data = states, aes(x     = state.x, 
+y     = state.y, 
+label = BorrowerState,
+group = NULL), size = 4, colour="white") +
+scale_fill_distiller(palette = "Spectral") +
+theme_bw()
+
+```
+
+
+## Listing creation in prosper by time
+
+### Listing Creation Date - Year
+> Analisis por anio
+
+```{r echo=FALSE, Univariate_Plots_Date_Year}
+qplot(data = loanData, x = ListingCreationYear, color = I('black'), fill = I('#00ccff'))
+
+
+ggplot(aes(x = ListingCreationYear , y = LoanOriginalAmount ), data = loanData) + 
+  geom_bar(stat = "identity") 
+
+```
+
+### Listing Creation Date - Month
+> Analisis por mes
+
+```{r echo=FALSE, Univariate_Plots_Date_Months}
+
+qplot(data = loanData, x = ListingCreationMonth, color = I('black'), fill = I('#00ccff')) + 
+  scale_x_discrete(breaks=1:12) +
+  facet_wrap(~ListingCreationYear, ncol=3)
+
+```
+
+### Listing Creation Date - Day
+> Analisis por dia
+
+```{r echo=FALSE, Univariate_Plots_Date_Days}
+
+qplot(data = loanData, x = ListingCreationDay, color = I('black'), fill = I('#00ccff')) + 
+  scale_x_discrete(breaks=01:31) +
+  facet_wrap(~ListingCreationMonth, ncol=3)
+
+```
+
+## Listing creation in prosper by *****
+
+### Listing by Category 
+> Analisis por Categoria
+
+```{r echo=FALSE, Univariate_Plots_Categoria}
+
+qplot(data = loanData, x = ListingCategory..numeric., binwidth = 1, color = I('black'), fill = I('#099DD9')) +
+  scale_x_continuous(breaks = 0:20)
+
+ggplot(aes(x = ListingCategory..numeric. , y = LoanOriginalAmount ), data = loanData) + 
+  geom_bar(stat = "identity", color = I('#00ccff'))
+
+qplot(data = loanData, x = ListingCategory..numeric., binwidth = 1, color = I('black'), fill = I('#00ccff')) + 
+  scale_x_continuous(breaks=0:20) +
+  facet_wrap(~ListingCreationYear, ncol=3)
+
+qplot(data = loanData, x = ListingCategory..numeric., binwidth = 1, color = I('black'), fill = I('#00ccff')) + 
+  scale_x_continuous(breaks=0:20) +
+  facet_grid(Term ~ .)
+
+```
+
+
+
+# Univariate Analysis
+
+> **Tip**: Now that you've completed your univariate explorations, it's time to
+reflect on and summarize what you've found. Use the questions below to help you
+gather your observations and add your own if you have other thoughts!
+
+### What is the structure of your dataset?
+
+### What is/are the main feature(s) of interest in your dataset?
+
+### What other features in the dataset do you think will help support your \
+investigation into your feature(s) of interest?
+
+### Did you create any new variables from existing variables in the dataset?
+
+### Of the features you investigated, were there any unusual distributions? \
+Did you perform any operations on the data to tidy, adjust, or change the form \
+of the data? If so, why did you do this?
+
+
+# Bivariate Plots Section
+
+> **Tip**: Based on what you saw in the univariate plots, what relationships
+between variables might be interesting to look at in this section? Don't limit
+yourself to relationships between a main output feature and one of the
+supporting variables. Try to look at relationships between supporting variables
+as well.
+
+```{r echo=FALSE, Bivariate_Plots}
+
+```
+
+# Bivariate Analysis
+
+> **Tip**: As before, summarize what you found in your bivariate explorations
+here. Use the questions below to guide your discussion.
+
+### Talk about some of the relationships you observed in this part of the \
+investigation. How did the feature(s) of interest vary with other features in \
+the dataset?
+
+### Did you observe any interesting relationships between the other features \
+(not the main feature(s) of interest)?
+
+### What was the strongest relationship you found?
+
+
+# Multivariate Plots Section
+
+> **Tip**: Now it's time to put everything together. Based on what you found in
+the bivariate plots section, create a few multivariate plots to investigate
+more complex interactions between variables. Make sure that the plots that you
+create here are justified by the plots you explored in the previous section. If
+you plan on creating any mathematical models, this is the section where you
+will do that.
+
+```{r echo=FALSE, Multivariate_Plots}
+
+```
+
+# Multivariate Analysis
+
+### Talk about some of the relationships you observed in this part of the \
+investigation. Were there features that strengthened each other in terms of \
+looking at your feature(s) of interest?
+
+### Were there any interesting or surprising interactions between features?
+
+### OPTIONAL: Did you create any models with your dataset? Discuss the \
+strengths and limitations of your model.
+
+------
+
+# Final Plots and Summary
+
+> **Tip**: You've done a lot of exploration and have built up an understanding
+of the structure of and relationships between the variables in your dataset.
+Here, you will select three plots from all of your previous exploration to
+present here as a summary of some of your most interesting findings. Make sure
+that you have refined your selected plots for good titling, axis labels (with
+                                                                         units), and good aesthetic choices (e.g. color, transparency). After each plot,
+make sure you justify why you chose each plot by describing what it shows.
+
+### Plot One
+```{r echo=FALSE, Plot_One}
+
+```
+
+### Description One
+
+
+### Plot Two
+```{r echo=FALSE, Plot_Two}
+
+```
+
+### Description Two
+
+
+### Plot Three
+```{r echo=FALSE, Plot_Three}
+
+```
+
+### Description Three
+
+------
+  
+  # Reflection
+  
+  > **Tip**: Here's the final step! Reflect on the exploration you performed and
+the insights you found. What were some of the struggles that you went through?
+What went well? What was surprising? Make sure you include an insight into
+future work that could be done with the dataset.
+
+> **Tip**: Don't forget to remove this, and the other **Tip** sections before
+saving your final work and knitting the final report!
