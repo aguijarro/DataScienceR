@@ -10,35 +10,67 @@ output:
 Introduction
 ========================================================
 
-> **Prosper**:  is the country's first peer-to-peer lending marketplace. The company has provided more than $2,000,000,000 in loans. Loan interest rates range from 5.99% for the most credit worthy borrowers to 36.00% APR for consumers with lower credit ratings.  Borrowers can obtain loans from $2,000 up to $35,000. 
+> **Prosper**:  is the country's first peer-to-peer lending marketplace. The 
+company has provided more than $2,000,000,000 in loans. Loan interest rates 
+range from 5.99% for the most credit worthy borrowers to 36.00% APR for 
+consumers with lower credit ratings.  Borrowers can obtain loans from $2,000 up 
+to $35,000. 
 
-* **Financialand social rewards:**  As a peer-to-peer lending site, Prosper allows individuals and groups to lend money to their peers. Lenders reap both social and financial benefits from lending as well as greater returns than they would receive from a bank. This encourages people to fund loan requests. Borrowers understand that their loan is funded by other peers, not a traditional banking institution.
-* **Easy rate retrieval:** Customers quickly find out their loan interest rate by providing basic information online. Those borrowers with higher credit scores typically receive lower interest rates.
-* **Simple funding process:** Customers quickly find out their loan interest rate by providing basic information online. Those borrowers with higher credit scores typically receive lower interest rates.
-* **No collateral required:** Borrowers from Prosper don’t need collateral in order to qualify for a loan. Their funding is based on credit history as well as a few additional criteria.
-* **Reputation:** Prosper is Americas first peer-to-peer lending company and has a reputation for being a trustworthy and dependable personal loan company.
-Best for People looking to refinance debt, individuals starting a business, consumers facing financial hardship and those looking to finance a major life event. Source (https://www.consumeraffairs.com/finance/prosper.html)
+* **Financialand social rewards:**  As a peer-to-peer lending site, Prosper 
+allows individuals and groups to lend money to their peers. Lenders reap both 
+social and financial benefits from lending as well as greater returns than they 
+would receive from a bank. This encourages people to fund loan requests. 
+Borrowers understand that their loan is funded by other peers, not a traditional 
+banking institution.
 
-> As a potential data scientist, I will explore the data about borrower market to learn about the borrowers behavior, loan demographic segmentation, and the performance of Prosper in terms of the volume of listings by year and by area.
+* **Easy rate retrieval:** Customers quickly find out their loan interest rate 
+by providing basic information online. Those borrowers with higher credit scores 
+typically receive lower interest rates.
+
+* **Simple funding process:** Customers quickly find out their loan interest 
+rate by providing basic information online. Those borrowers with higher credit 
+scores typically receive lower interest rates.
+
+* **No collateral required:** Borrowers from Prosper don’t need collateral in 
+order to qualify for a loan. Their funding is based on credit history as well as 
+a few additional criteria.
+
+* **Reputation:** Prosper is Americas first peer-to-peer lending company and has 
+a reputation for being a trustworthy and dependable personal loan company.
+
+Best for People looking to refinance debt, individuals starting a business, 
+consumers facing financial hardship and those looking to finance a major life 
+event. Source (https://www.consumeraffairs.com/finance/prosper.html)
+
+> As a potential data scientist, I will explore the data about borrower market 
+to learn about the borrowers behavior, loan demographic segmentation, and the 
+performance of Prosper in terms of the volume of listings by year and by area.
 
 Data Set Option
 ========================================================
 
-> **Loan Data from Prosper**: Last update: 03/11/2014. This data set contains 113,937 loans with 81 variables on each loan, including loan amount, borrower rate (or interest rate), current loan status, borrower income, borrower employment status, borrower credit history, and the latest payment information.
+> **Loan Data from Prosper**: Last update: 03/11/2014. This data set contains 
+113,937 loans with 81 variables on each loan, including loan amount, borrower 
+rate (or interest rate), current loan status, borrower income, borrower 
+employment status, borrower credit history, and the latest payment information.
 
-> To learn more about the data please visit this variable dictionary which explains the variables in the data set. https://docs.google.com/spreadsheets/d/1gDyi_L4UvIrLTEC6Wri5nbaMmkGmLQBk-Yx3z0XDEtI/edit#gid=0
+> To learn more about the data please visit this variable dictionary which 
+explains the variables in the data set. https://goo.gl/m9hNi4
 
 Research Questions
 ========================================================
 
-* Analyzing loan bussiness in Prosper to understand the loan market by year, by usage of loan and by states
+* Analyzing loan bussiness in Prosper to understand the loan market by year, by 
+usage of loan and by states
 
-* Exploring the relationships between numeric variables and how them affects each others.
+* Exploring the relationships between numeric variables and how them affects 
+each others.
 
 Analysis
 ========================================================
 
-> **Packages requiered**: These packages are requiered for this EDA. To install, please execute the following code.
+> **Packages requiered**: These packages are requiered for this EDA. To install, 
+please execute the following code.
 
 * install.packages("knitr", dependencies = T)
 * install.packages("devtools", dependencies = T)
@@ -55,7 +87,6 @@ Analysis
 * install_github('ramnathv/rMaps')
 * install.packages("amps", dependencies = T)
 * install.packages("corrplot", dependencies = T)
-* install.packages('GGally')
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
@@ -83,13 +114,12 @@ library("tidyr")
 library("reshape2")
 library("reshape")
 library("maps")
-library('corrplot') 
-library('GGally')
-
+library("corrplot") 
 
 ```
 
 ```{r echo=FALSE, Load_the_Data}
+
 # Set directory path where the data is located
 setwd('/Users/aguijarro/SoftwareCode/github.com/aguijarro/R/ProjectEDA')
 
@@ -109,7 +139,12 @@ dim(loanData)
 
 ```
 
-The data set includes different kind of variables like loan amount, borrower rate (or interest rate), current loan status, borrower income, borrower employment status, borrower credit history, and the latest payment information. The variables are from different types. To do that I will use summary function which is a generic function used to produce result summaries of the results of various model fitting functions.
+The data set includes different kind of variables like loan amount, borrower 
+rate (or interest rate), current loan status, borrower income, borrower 
+employment status, borrower credit history, and the latest payment information. 
+The variables are from different types. To do that I will use summary function 
+which is a generic function used to produce result summaries of the results of 
+various model fitting functions.
 
 ```{r echo=FALSE}
 
@@ -120,7 +155,9 @@ summary(loanData)
 
 # Univariate Plots Section
 
-> **Tip**: In this section, what I want to find are some geographic and seasonals behavioral patterns. To do that, I need to create some columns related to dates.
+> **Tip**: In this section, what I want to find are some geographic and 
+seasonals behavioral patterns. To do that, I need to create some columns related 
+to dates.
 
 ```{r echo=FALSE, Prepare_Univariate_Plots_Date}
 # Prepare date variables for analysis
@@ -143,7 +180,11 @@ loanData$ListingCreationDay <- as.factor(as.numeric(ListingCreationDay))
 
 ## Listing by Geography Location
 ### Listing By Borrower State
-> As we can observe, there are loans spread out around all country. This could mean that the company has network office distribute around the country, or maybe it offer a website which is known and accessed from every country. Also, this could mean that the company has a good reputation and confidence, so people around the country demands its services.
+> As we can observe, there are loans spread out around all country. This could 
+mean that the company has network office distribute around the country, or maybe 
+it offer a website which is known and accessed from every country. Also, this 
+could mean that the company has a good reputation and confidence, so people 
+around the country demands its services.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots_Location}
 
@@ -192,7 +233,10 @@ geom_jitter(data=loanData,aes(x=state.x, y=state.y, group=NULL), colour="yellow"
 
 
 ## Group data by BorrowerState
-> Even though the loans are around the country, there are some states which have more number of loans than others. The table and the graph below show the top five states with the higher amount of loans. In order descendent order these states are: California, Texas, New York, Florida, and Illinois.
+> Even though the loans are around the country, there are some states which have 
+more number of loans than others. The table and the graph below show the top 
+five states with the higher amount of loans. In order descendent order these 
+states are: California, Texas, New York, Florida, and Illinois.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Univ_Plots_Loc_Gpr_Bor_Sta_Md1}
 loanData.grp_borrower_state <- loanData %>%
@@ -228,7 +272,10 @@ scale_fill_distiller(palette = "Spectral") +
 theme_bw()
 ```
 
-> Althought the number of loans are important, more important is the amount of money these loans produced. So, let's identify which states makes more money. As you can see the top five states which more money produced are: Texas, California, New York, Illinois, and Florida. 
+> Althought the number of loans are important, more important is the amount of 
+money these loans produced. So, let's identify which states makes more money. 
+As you can see the top five states which more money produced are: Texas, 
+California, New York, Illinois, and Florida. 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Univ_Plots_Loc_Gpr_Bor_Sta_Md2}
 
@@ -256,7 +303,13 @@ theme_bw()
 ## Listing creation in prosper by time
 
 ### Listing Creation Date - Year
-> Once I have a interesting idea about loan geographic segmentation, now I want to determine how loans evolved during the time. In the first graphic below, I can observe that two years (2006 and 2009) the loans were very low.  Probably the first year (2006) was the beginning of the company, and the second there was something problem in the economy. During the other years, the amount of loans were growing because of Economy recovery. The other two graphics show us a constant value in the amount of money required in the loans.
+> Once I have a interesting idea about loan geographic segmentation, now I want 
+to determine how loans evolved during the time. In the first graphic below, I 
+can observe that two years (2006 and 2009) the loans were very low.  Probably 
+the first year (2006) was the beginning of the company, and the second there 
+was something problem in the economy. During the other years, the amount of 
+loans were growing because of Economy recovery. The other two graphics show us 
+a constant value in the amount of money required in the loans.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots_Date_Year}
 
@@ -272,7 +325,9 @@ ggplot(aes(x = ListingCreationYear , y = LoanOriginalAmount ), data = loanData) 
 ```
 
 ### Listing Creation Date - Month
-> Even though there are some years with more amount of loans (2013), I can not observe a seasonal behavior per month in a year. This could mean that people need money not for a specific reason like Holidays.
+> Even though there are some years with more amount of loans (2013), I can not 
+observe a seasonal behavior per month in a year. This could mean that people 
+need money not for a specific reason like Holidays.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots_Date_Months}
 
@@ -283,7 +338,8 @@ qplot(data = loanData, x = ListingCreationMonth, color = I('black'), fill = I('#
 ```
 
 ### Listing Creation Date - Day
-> As the same of months behavior, we cannot observe in a clear way a seasonal behavior in the days of each month.
+> As the same of months behavior, we cannot observe in a clear way a seasonal 
+behavior in the days of each month.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots_Date_Days}
 
@@ -295,9 +351,24 @@ qplot(data = loanData, x = ListingCreationDay, color = I('black'), fill = I('#00
 
 
 ### Listing by Category 
-> To complete this first analysis, I want to discoverer the principal reason why people get a loan. To do that, I will analyse the category of the listing that the borrower selected when posting their listing. Because this variable is numeric, I attached here the meaning of each number:  0 - Not Available, 1 - Debt Consolidation, 2 - Home Improvement, 3 - Business, 4 - Personal Loan, 5 - Student Use, 6 - Auto, 7- Other, 8 - Baby&Adoption, 9 - Boat, 10 - Cosmetic Procedure, 11 - Engagement Ring, 12 - Green Loans, 13 - Household Expenses, 14 - Large Purchases, 15 - Medical/Dental, 16 - Motorcycle, 17 - RV, 18 - Taxes, 19 - Vacation, 20 - Wedding Loans
+> To complete this first analysis, I want to discoverer the principal reason why 
+people get a loan. To do that, I will analyse the category of the listing that 
+the borrower selected when posting their listing. Because this variable is 
+numeric, I attached here the meaning of each number:  0 - Not Available, 
+1 - Debt Consolidation, 2 - Home Improvement, 3 - Business, 4 - Personal Loan, 
+5 - Student Use, 6 - Auto, 7- Other, 8 - Baby&Adoption, 9 - Boat, 
+10 - Cosmetic Procedure, 11 - Engagement Ring, 12 - Green Loans, 13 - Household 
+Expenses, 14 - Large Purchases, 15 - Medical/Dental, 16 - Motorcycle, 
+17 - RV, 18 - Taxes, 19 - Vacation, 20 - Wedding Loans
 
-> In the first graph, we can observe that the principal reason to make a loan during the years are the category 0 (Not Available), however if we limit to get the quantile 0.95 in the y axis, the principal columns are 0 (Not Available) and 7 (Other). We can also confirm this pattern in the second graphics where I split the data also for Term. It is totally clear that these reasult don't give as much information, also we can mention that the dataset could be improve in this variable. Considering the next result, the most important categories are: 2 (Home Improvement) and 3 (Business). 
+> In the first graph, we can observe that the principal reason to make a loan 
+during the years are the category 0 (Not Available), however if we limit to get 
+the quantile 0.95 in the y axis, the principal columns are 0 (Not Available) 
+and 7 (Other). We can also confirm this pattern in the second graphics where I 
+split the data also for Term. It is totally clear that these reasult don't give 
+as much information, also we can mention that the dataset could be improve in 
+this variable. Considering the next result, the most important categories are: 
+2 (Home Improvement) and 3 (Business). 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots_Categoria}
 
@@ -317,7 +388,8 @@ qplot(data = loanData, x = ListingCategory..numeric., binwidth = 1, color = I('b
 
 ```
 
-> Finally, we can determine about categories is that the amount of data is very regular in most of the categories.
+> Finally, we can determine about categories is that the amount of data is very 
+regular in most of the categories.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots_Categoria_1}
 
@@ -333,7 +405,13 @@ ggplot(aes(x = ListingCategory..numeric. , y = LoanOriginalAmount ), data = loan
 
 ### What is the structure of your dataset?
 
-> This data set contains 113,937 loans with 81 variables. The data set includes different kind of variables like loan amount, borrower rate (or interest rate), current loan status, borrower income, borrower employment status, borrower credit history, and the latest payment information. The variables are from different types. To do that I will use summary function which is a generic function used to produce result summaries of the results of various model fitting functions.
+> This data set contains 113,937 loans with 81 variables. The data set includes 
+different kind of variables like loan amount, borrower rate (or interest rate), 
+current loan status, borrower income, borrower employment status, borrower 
+credit history, and the latest payment information. The variables are from 
+different types. To do that I will use summary function which is a generic 
+function used to produce result summaries of the results of various model 
+fitting functions.
 
 ### What is/are the main feature(s) of interest in your dataset?
 
@@ -342,7 +420,8 @@ ggplot(aes(x = ListingCategory..numeric. , y = LoanOriginalAmount ), data = loan
 * LoanOriginalAmount
 * MonthlyLoanPayment
 
-### What other features in the dataset do you think will help support your analysis?
+### What other features in the dataset do you think will help support your \
+analysis?
 
 > The help support features are:
 
@@ -357,7 +436,8 @@ ggplot(aes(x = ListingCategory..numeric. , y = LoanOriginalAmount ), data = loan
 
 ### Did you create any new variables from existing variables in the dataset?
 
-> To analyze how loans behave during the time I created three columns: ListingCreationYear, ListingCreationMonth, and ListingCreationDay . 
+> To analyze how loans behave during the time I created three columns: 
+ListingCreationYear, ListingCreationMonth, and ListingCreationDay . 
 
 
 ### Of the features you investigated, were there any unusual distributions? \
@@ -366,16 +446,28 @@ No features has unsual distributions.
 
 # Bivariate Plots Section
 
-> In this bivariate analysis, what I want to find are common variable relationships according with some ideas about the loan business I have. In that order, I think the following list are natural relationships in loan business.
+> In this bivariate analysis, what I want to find are common variable 
+relationships according with some ideas about the loan business I have. 
+In that order, I think the following list are natural relationships in 
+loan business.
 
-**LoanOriginalAmount vs MonthlyLoanPayment** -> Higher loan amount, higher monthly payment.
-**LoanOriginalAmount vs Investors** -> Higher loan amount, higher number of investors.
+**LoanOriginalAmount vs MonthlyLoanPayment** -> Higher loan amount, 
+higher monthly payment.
+
+**LoanOriginalAmount vs Investors** -> Higher loan amount, 
+higher number of investors.
+
 **EstimatedReturn vs Investors** -> Higher estimated return, higher investors.
-**LoanOriginalAmount vs EmploymentStatusDuration** -> Higher loan amount, higher employment status duration.
-**BankcardUtilization vs LoanOriginalAmount** -> Higher bankcard utilization, higher loan amount.
+
+**LoanOriginalAmount vs EmploymentStatusDuration** -> Higher loan amount, 
+higher employment status duration.
+
+**BankcardUtilization vs LoanOriginalAmount** -> Higher bankcard utilization, 
+higher loan amount.
 
 ## LoanOriginalAmount vs MonthlyLoanPayment
-> The correlation between these two variables are strong positive. It means that higher loan amount result in  higher monthly payment.
+> The correlation between these two variables are strong positive. It means that 
+higher loan amount result in  higher monthly payment.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, LoanOriginalAmountMonthlyLoanPayment}
 
@@ -393,7 +485,9 @@ with(loanData, cor.test(LoanOriginalAmount, MonthlyLoanPayment, method = 'pearso
 ```
 
 ## LoanOriginalAmount vs Investors
-> Even though it exists correlation between these two variables, it is not strong. It means that it is not complete true that higher loan amount imply higher number of investors.
+> Even though it exists correlation between these two variables, it is not 
+strong. It means that it is not complete true that higher loan amount imply 
+higher number of investors.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, LoanOriginalAmountInvestors}
 
@@ -411,7 +505,8 @@ with(loanData, cor.test(LoanOriginalAmount, Investors, method = 'pearson'))
 ```
 
 ## EstimatedReturn vs Investors
->  The are not correlation between these two variables because the coefficient are very close to 0.
+>  The are not correlation between these two variables because the coefficient 
+are very close to 0.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, EstimatedReturnInvestors}
 
@@ -427,7 +522,8 @@ with(loanData, cor.test(EstimatedReturn, Investors, method = 'pearson'))
 ```
 
 ## LoanOriginalAmount vs EmploymentStatusDuration
-> The are not correlation between these two variables because the coefficient are very close to 0.
+> The are not correlation between these two variables because the coefficient 
+are very close to 0.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, LoanOriginalAmountEmploymentStatusDuration}
 
@@ -442,7 +538,8 @@ with(loanData, cor.test(LoanOriginalAmount, EmploymentStatusDuration, method = '
 ```
 
 ## BankcardUtilization vs LoanOriginalAmount
-> The are not correlation between these two variables because the coefficient are very close to 0.
+> The are not correlation between these two variables because the coefficient 
+are very close to 0.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, BankcardUtilizationLoanOriginalAmount}
 
@@ -457,10 +554,16 @@ with(loanData, cor.test(LoanOriginalAmount, BankcardUtilization, method = 'pears
 
 ```
 
-> Because just one scatter plot show a strong correlation, it is important to define another strategy to identify variable relationships. Also, it is important to mention that people can have some ideas about business which not really are true because of ignorance in that field. For that reason, it is important to be objective when we analyce data.
+> Because just one scatter plot show a strong correlation, it is important to 
+define another strategy to identify variable relationships. Also, it is 
+important to mention that people can have some ideas about business which not 
+really are true because of ignorance in that field. For that reason, it is 
+important to be objective when we analyce data.
 
 ## New Strategy
-> To improve the variables selection, I am going to calculate the correlation between all numeric variables. In order to achieve this activity, I will modify the data set to maintain only numeric data, and then change column names. 
+> To improve the variables selection, I am going to calculate the correlation 
+between all numeric variables. In order to achieve this activity, I will modify 
+the data set to maintain only numeric data, and then change column names. 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plots20}
 # Get only numeric data
@@ -474,70 +577,8 @@ names(loandData.numeric)[1:length(loandData.numeric)] <- sprintf("x%d", 1:length
 
 ```
 
-> The column names changed in this way:
-
-  * [1] "Term" --->  x1
-  * [2] "BorrowerAPR" --->  x2
-  * [3] "BorrowerRate" --->  x3
-  * [4]  "LenderYield" --->  x4                        
-  * [5] "EstimatedEffectiveYield" --->  x5
-  * [6]  "EstimatedLoss" --->  x6                      
-  * [7] "EstimatedReturn" --->  x7
-  * [8]  "ProsperRating..numeric." --->  x8            
-  * [9] "ProsperScore" --->  x9
-  * [10]  "ListingCategory..numeric." --->  x10         
-  * [11] "EmploymentStatusDuration" --->  x11               
-  * [12]  "CreditScoreRangeLower" --->  x12  
-  * [13] "CreditScoreRangeUpper" --->  x13                  
-  * [14]  "CurrentCreditLines" --->  x14        
-  * [15] "OpenCreditLines" --->  x15                        
-  * [16]  "TotalCreditLinespast7years" --->  x16      
-  * [17] "OpenRevolvingAccounts" --->  x17                  
-  * [18]  "OpenRevolvingMonthlyPayment" --->  x18
-  * [19] "InquiriesLast6Months" --->  x19                   
-  * [20]  "TotalInquiries" --->  x20
-  * [21] "CurrentDelinquencies" --->  x21                   
-  * [22]  "AmountDelinquent" --->  x22
-  * [23] "DelinquenciesLast7Years" --->  x23                
-  * [24]  "PublicRecordsLast10Years" --->  x24
-  * [25] "PublicRecordsLast12Months" --->  x25              
-  * [26]  "RevolvingCreditBalance" --->  x26    
-  * [27] "BankcardUtilization" --->  x27                    
-  * [28]  "AvailableBankcardCredit" --->  x28   
-  * [29] "TotalTrades" --->  x29                            
-  * [30]  "TradesNeverDelinquent..percentage." --->  x30
-  * [31] "TradesOpenedLast6Months" --->  x31                
-  * [32]  "DebtToIncomeRatio" --->  x32               
-  * [33] "StatedMonthlyIncome" --->  x33                    
-  * [34]  "TotalProsperLoans" --->  x34                
-  * [35] "TotalProsperPaymentsBilled" --->  x35             
-  * [36]  "OnTimeProsperPayments" --->  x36           
-  * [37] "ProsperPaymentsLessThanOneMonthLate" --->  x37    
-  * [38]  "ProsperPaymentsOneMonthPlusLate" --->  x38 
-  * [39] "ProsperPrincipalBorrowed" --->  x39               
-  * [40]  "ProsperPrincipalOutstanding" --->  x40     
-  * [41] "ScorexChangeAtTimeOfListing" --->  x41            
-  * [42]  "LoanCurrentDaysDelinquent" --->  x42       
-  * [43] "LoanFirstDefaultedCycleNumber" --->  x43          
-  * [44]  "LoanMonthsSinceOrigination" --->  x44      
-  * [45] "LoanOriginalAmount" --->  x45                     
-  * [46]  "MonthlyLoanPayment" --->  x46              
-  * [47] "LP_CustomerPayments" --->  x47                    
-  * [48]  "LP_CustomerPrincipalPayments" --->  x48    
-  * [49] "LP_InterestandFees" --->  x49                     
-  * [50]  "LP_ServiceFees" --->  x50                  
-  * [51] "LP_CollectionFees" --->  x51                      
-  * [52]  "LP_GrossPrincipalLoss" --->  x52           
-  * [53] "LP_NetPrincipalLoss" --->  x53                    
-  * [54]  "LP_NonPrincipalRecoverypayments" --->  x54 
-  * [55] "PercentFunded" --->  x55                          
-  * [56]  "Recommendations" --->  x56                 
-  * [57] "InvestmentFromFriendsCount" --->  x57             
-  * [58]  "InvestmentFromFriendsAmount" --->  x58       
-  * [59] "Investors"  --->  x59   
-
-
-> Now, I will drop NA values, and finally I will calculate correlations and show them with a graphic to easy understanding.
+> Now, I will drop NA values, and finally I will calculate correlations and show 
+them with a graphic to easy understanding.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plots}
 # Remove na values
@@ -592,7 +633,8 @@ corrplot(loandData.numeric.cor, method="square",is.corr=FALSE,type="full", tl.ce
 > In that order, the new variables chosen to analyze the correlation are:
 
 ##  MonthlyLoanPayment - LoanOriginalAmount
-> The correlation between these two variables are strong positive. It means that higher loan amount result in  higher monthly payment.
+> The correlation between these two variables are strong positive. It means that 
+higher loan amount result in  higher monthly payment.
                      
 ```{r echo=FALSE, message=FALSE, warning=FALSE, MonthlyLoanPaymentLoanOriginalAmount}
 
@@ -626,7 +668,8 @@ with(loanData, cor.test(LoanOriginalAmount, MonthlyLoanPayment, method = 'pearso
 
 
 ##  LP_ServiceFees - LoanOriginalAmount
-> The correlation between these two variables are strong positive. It means that higher loan amount result in  less  LP_ServiceFees.
+> The correlation between these two variables are strong positive. It means that 
+higher loan amount result in  less  LP_ServiceFees.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, LP_ServiceFeesLoanOriginalAmount}
 
@@ -654,26 +697,24 @@ with(loanData, cor.test(LoanOriginalAmount, LP_ServiceFees, method = 'pearson'))
 
 
 ##  ProsperRating..numeric. - EstimatedLoss
-> The correlation between these two variables are strong negative. It means that higher ProsperRating..numeric. result in  less  EstimatedLoss.
+> The correlation between these two variables are strong negative. It means that 
+higher ProsperRating..numeric. result in  less  EstimatedLoss. 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, ProsperRating..numeric.EstimatedLoss}
 
-ggplot(aes(x = ProsperRating..numeric., y = EstimatedLoss), data = loanData) +
-  geom_point()
+ggplot(data=loanData, aes(loanData$ProsperRating..Alpha., loanData$EstimatedLoss)) + 
+  geom_boxplot() 
 
-ggplot(aes(x = ProsperRating..numeric., y = EstimatedLoss), data = loanData) +
-  geom_jitter(alpha = 1/20) 
+ggplot(data=loanData, aes(ProsperRating..Alpha., EstimatedLoss, fill=ProsperRating..Alpha.)) + 
+  geom_boxplot(outlier.shape = NA) +
+  ylim(0, quantile(loanData$EstimatedLoss, 0.95, na.rm = TRUE)) +
+  labs(title="Prosper Rating vs Estimated Loss") + 
+  xlab("Prosper Rating") + 
+  ylab("Estimated Loss") +
+  guides(fill=guide_legend(title=NULL))
 
-ggplot(aes(x = ProsperRating..numeric., y = EstimatedLoss), data = loanData) +
-  geom_point() + 
-  xlim(1, quantile(loanData$ProsperRating..numeric., 0.95, na.rm = TRUE)) + 
-  ylim(0.005, quantile(loanData$EstimatedLoss, 0.95, na.rm = TRUE)) +
-  geom_smooth(method = 'lm', color = 'red') +
-  xlab("ProsperRating..numeric.") + 
-  ylab("EstimatedLoss")
 
 # Strong positive correlation
-
 with(loanData, cor.test(ProsperRating..numeric., EstimatedLoss, method = 'pearson'))
 
 ```
@@ -686,18 +727,28 @@ with(loanData, cor.test(ProsperRating..numeric., EstimatedLoss, method = 'pearso
 investigation. How did the feature(s) of interest vary with other features in \
 the dataset?
 
->  The list below show the initial relationships I thought were natural. However, most of these variables are not correlated each other.
+>  The list below show the initial relationships I thought were natural. 
+However, most of these variables are not correlated each other.
 
-**LoanOriginalAmount vs MonthlyLoanPayment** -> Higher loan amount, higher monthly payment.
-**LoanOriginalAmount vs Investors** -> Higher loan amount, higher number of investors.
+**LoanOriginalAmount vs MonthlyLoanPayment** -> Higher loan amount, 
+higher monthly payment.
+
+**LoanOriginalAmount vs Investors** -> Higher loan amount, 
+higher number of investors.
+
 **EstimatedReturn vs Investors** -> Higher estimated return, higher investors.
-**LoanOriginalAmount vs EmploymentStatusDuration** -> Higher loan amount, higher employment status duration.
-**BankcardUtilization vs LoanOriginalAmount** -> Higher bankcard utilization, higher loan amount.
+
+**LoanOriginalAmount vs EmploymentStatusDuration** -> Higher loan amount, 
+higher employment status duration.
+
+**BankcardUtilization vs LoanOriginalAmount** -> Higher bankcard utilization, 
+higher loan amount.
 
 ### Did you observe any interesting relationships between the other features \
 (not the main feature(s) of interest)?
 
-> In order to identify more useful relationships, I calculate the correlation coefficient between all variables and I find the following list:
+> In order to identify more useful relationships, I calculate the correlation 
+coefficient between all variables and I find the following list:
 
   * 1) BorrowerRate - BorrowerAPR ---> 0.989824                           
   * 2) LenderYield - BorrowerAPR --->  0.9893289    
@@ -732,19 +783,26 @@ the dataset?
 
 ### What was the strongest relationship you found?
 
-> There are two strongest relationships I found: 1)  CreditScoreRangeUpper - CreditScoreRangeLower --->  1 and the other: MonthlyLoanPayment - LoanOriginalAmount ---> 0.9319837.
+> There are two strongest relationships I found: 
+1)  CreditScoreRangeUpper - CreditScoreRangeLower --->  1 
+and the other: MonthlyLoanPayment - LoanOriginalAmount ---> 0.9319837.
 
 
 # Multivariate Plots Section
 
-> In this section, what I want to show is how affects a third support variable to the  relationships I found in bivariate analysis. In the first image what we can observe is that most of the MonthlyLoanPayment are related to 36 and 60 months.
+> In this section, what I want to show is how affects a third support variable 
+to the  relationships I found in bivariate analysis. In the first image what we 
+can observe is that most of the MonthlyLoanPayment are related to 36 and 60 
+months.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_1}
+
+loanData$Term <- factor(loanData$Term, levels=c(12,36,60), ordered=TRUE)
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = Term)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="Scatterplot")
+  theme_bw() + labs(title="Loan Original Amount vs Monthly Loan Payment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = Term)) + 
@@ -753,11 +811,12 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() 
+  theme_bw() + labs(title="Loan Original Amount vs Monthly Loan Payment")
 
 ```
 
-> Also, we can see that most of the people have an employment and an important number of them have a full time jobs.
+> Also, we can see that most of the people have an employment and an important 
+number of them have a full time jobs.
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_2}
@@ -765,7 +824,7 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = EmploymentStatus)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="Scatterplot")
+  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = EmploymentStatus)) + 
@@ -774,11 +833,12 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() 
+  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
 
 ```
 
-> Then, we can see that a great number of loans were complete, however there are an important number which are currently opened.
+> Then, we can see that a great number of loans were complete, however there are 
+an important number which are currently opened.
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_3}
@@ -786,7 +846,7 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = LoanStatus)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="Scatterplot")
+  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = LoanStatus)) + 
@@ -795,11 +855,12 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() 
+  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
 
 ```
 
-> Also it is important to mention that most of the loans have a Rate A, AA, and B which means that the portfolio of the company does not have a higher risk.
+> Also it is important to mention that most of the loans have a Rate A, AA, and 
+B which means that the portfolio of the company does not have a higher risk.
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_4}
@@ -807,7 +868,7 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = ProsperRating..Alpha.)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="Scatterplot")
+  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = ProsperRating..Alpha.)) + 
@@ -816,11 +877,12 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() 
+  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
 
 ```
 
-> Finally, we can observe that the principal income of range from people who ask a loan is around $25000 to $75000.
+> Finally, we can observe that the principal income of range from people who ask 
+a loan is around $25000 to $75000.
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_5}
@@ -828,7 +890,7 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = IncomeRange)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="Scatterplot")
+  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = IncomeRange)) + 
@@ -837,20 +899,19 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() 
+  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
 
 ```
 
 
-> Also, what I can observe in the following graph is that the MonthlyLoanPayment month mean increase according with the EmploymentStatusDuration, however the term no depends of the amount on MonthlyLoanPayment or EmploymentStatusDuration.
+> Also, what I can observe in the following graph is that the MonthlyLoanPayment 
+month mean increase according with the EmploymentStatusDuration, however the 
+term no depends of the amount on MonthlyLoanPayment or EmploymentStatusDuration.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_6}
 
 loanData.tempo <- loanData %>%
   filter(!is.na(EmploymentStatusDuration))
-
-qplot(x = EmploymentStatusDuration, y = MonthlyLoanPayment , data = loanData.tempo)
-
 
 loanData.grp_term_empStatus <- loanData %>%
   filter(!is.na(EmploymentStatusDuration)) %>%
@@ -863,23 +924,24 @@ loanData.grp_term_empStatus <- loanData %>%
 
 ggplot(aes(x = EmploymentStatusDuration, y = MonthlyLoanPayment_mean), data = loanData.grp_term_empStatus) + geom_line(aes(color = Term )) +
    xlim(0, quantile(loanData$EmploymentStatusDuration, 0.95, na.rm = TRUE)) +
-   ylim(0, quantile(loanData$MonthlyLoanPayment_mean, 0.95, na.rm = TRUE))
+   ylim(0, quantile(loanData$MonthlyLoanPayment_mean, 0.95, na.rm = TRUE)) + 
+  xlab("Employment Status Duration") + 
+  ylab("Monthly Loan Payment") +
+  labs(title="Employment Status Duration vs Monthly Loan Payment")
 
-
-ggplot(aes(x = EmploymentStatusDuration, y = MonthlyLoanPayment_mean), data = loanData.grp_term_empStatus) + geom_line(aes(color = Term ), stat = "summary", fun.y = median) +
-   xlim(0, quantile(loanData$EmploymentStatusDuration, 0.95, na.rm = TRUE))
 ```
 
 
-> In addition, what I can observe in the following graph is that the MonthlyLoanPayment month mean increase in two categories of Listing meanwhile in the others are constant. Also, there is a very lower value in one category. Again, the term no depends of the amount on MonthlyLoanPayment or Listing category.
+> In addition, what I can observe in the following graph is that the 
+MonthlyLoanPayment month mean increase in two categories of Listing meanwhile 
+in the others are constant. Also, there is a very lower value in one category. 
+Again, the term no depends of the amount on MonthlyLoanPayment or Listing 
+category.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_7}
 
 loanData.ListingCategory <- loanData %>%
   filter(!is.na(ListingCategory..numeric.))
-
-qplot(x = ListingCategory..numeric., y = MonthlyLoanPayment , data = loanData.ListingCategory)
-
 
 loanData.grp_term_ListingCategory <- loanData %>%
   filter(!is.na(ListingCategory..numeric.)) %>%
@@ -890,24 +952,19 @@ loanData.grp_term_ListingCategory <- loanData %>%
   ungroup() %>%
   arrange(Term)
 
-ggplot(aes(x = ListingCategory..numeric., y = MonthlyLoanPayment_mean), data = loanData.grp_term_ListingCategory) + geom_line(aes(color = Term )) +
-   xlim(0, quantile(loanData$ListingCategory..numeric., 0.95, na.rm = TRUE))
-
 
 ggplot(aes(x = ListingCategory..numeric., y = MonthlyLoanPayment_mean), data = loanData.grp_term_ListingCategory) + geom_line(aes(color = Term ), stat = "summary", fun.y = median) +
-   xlim(0, quantile(loanData$ListingCategory..numeric., 0.95, na.rm = TRUE))
+   xlim(0, quantile(loanData$ListingCategory..numeric., 0.95, na.rm = TRUE))  + 
+   xlab("Listing Category") + 
+   ylab("Monthly Loan Payment") +
+   labs(title="Listing Category vs Monthly Payment")
 
-```
-
-> Finally, I will try again to identify correlations between numeric variables, however because of amount of variables this graphic can not show everything. In that order, is better for my analysis to use the graph uses in the bivariate analysis.
-
-```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_8}
-
-theme_set(theme_minimal(20))
-set.seed(1836)
-loandData.numeric.subset <- loandData.numeric[,c(2:15)]
-names(loandData.numeric.subset)
-ggpairs(loandData.numeric.subset[sample.int(nrow(loandData.numeric.subset),1000),])
+ggplot(aes(x = ListingCategory..numeric., y = MonthlyLoanPayment_mean, fill=Term), data = loanData.grp_term_ListingCategory) + 
+   geom_bar(position = "stack", stat = "identity") +
+    xlim(0, quantile(loanData$ListingCategory..numeric., 0.95, na.rm = TRUE))  + 
+   xlab("Listing Category") + 
+   ylab("Monthly Loan Payment") +
+   labs(title="Listing Category vs Monthly Payment") 
 
 
 ```
@@ -917,49 +974,48 @@ ggpairs(loandData.numeric.subset[sample.int(nrow(loandData.numeric.subset),1000)
 
 ### Talk about some of the relationships you observed in this part of the \
 
-> In the first image what we can observe is that most of the MonthlyLoanPayment are related to 36 and 60 months. Also, we can see that most of the people have an employment and an important number of them have a full time jobs.Then, we can see that a great number of loans were complete, however there are an important number which are currently opened. Also it is important to mention that most of the loans have a Rate A, AA, and B which means that the portfolio of the company does not have a higher risk. Finally, we can observe that the principal income of range from people who ask a loan is around $25000 to $75000.
+> In the first image what we can observe is that most of the MonthlyLoanPayment 
+are related to 36 and 60 months. Also, we can see that most of the people have 
+an employment and an important number of them have a full time jobs.Then, we can 
+see that a great number of loans were complete, however there are an important 
+number which are currently opened. Also it is important to mention that most of 
+the loans have a Rate A, AA, and B which means that the portfolio of the company 
+does not have a higher risk. Finally, we can observe that the principal income 
+of range from people who ask a loan is around $25000 to $75000.
 
 
 ### Were there any interesting or surprising interactions between features?
 
-> Also, what I can observe is that the MonthlyLoanPayment month mean increase according with the EmploymentStatusDuration, however the term no depends of the amount on MonthlyLoanPayment or EmploymentStatusDuration
+> Also, what I can observe is that the MonthlyLoanPayment month mean increase 
+according with the EmploymentStatusDuration, however the term no depends of the 
+amount on MonthlyLoanPayment or EmploymentStatusDuration
 
 ------
 
 # Final Plots and Summary
 
-> **Tip**: You've done a lot of exploration and have built up an understanding
-of the structure of and relationships between the variables in your dataset.
-Here, you will select three plots from all of your previous exploration to
-present here as a summary of some of your most interesting findings. Make sure
-that you have refined your selected plots for good titling, axis labels (with
-                                                                         units), and good aesthetic choices (e.g. color, transparency). After each plot,
-make sure you justify why you chose each plot by describing what it shows.
-
 ### Plot One
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_One_A}
+```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_One}
+#Prepare Data
 loanData.grp_borrower_state <- loanData %>%
 group_by(BorrowerState, tolower(state.name)) %>%
-summarize(LoanOriginalAmount_mean = mean(LoanOriginalAmount),
-LoanOriginalAmount_median = median(LoanOriginalAmount),
-n = n()) %>%
-arrange(desc(n))
+  summarize(LoanOriginalAmount_mean = mean(LoanOriginalAmount),
+  LoanOriginalAmount_median = median(LoanOriginalAmount),
+  n = n()) %>%
+  arrange(desc(n))
 
 
 loanData.grp_borrower_state <- rename(loanData.grp_borrower_state, c("tolower(state.name)" = "state.name"))
 
 loanData.grp_borrower_state <- loanData.grp_borrower_state[1:5,]
 
-
-writeLines("td, th { padding : 6px } th { background-color : brown ; color : white; border : 1px solid white; } td { color : brown ; border : 1px solid brown }", con = "mystyle.css")
-knitr::kable(loanData.grp_borrower_state, format = "html")
-
 map1 <- map_data("state")
 map1 <- merge(map1, loanData.grp_borrower_state, by.x = c("region"), 
 by.y=c("state.name"), all.x=TRUE)
 map1 <- arrange(map1, order)
 
+# Build one graph
 ggplot(data = map1, aes(x = long, y = lat, group = group)) +
 geom_polygon(aes(fill = n)) +
 coord_map() +
@@ -969,17 +1025,10 @@ y     = state.y,
 label = BorrowerState,
 group = NULL), size = 4, colour="white") +
 scale_fill_distiller(palette = "Spectral") +
-theme_bw()
-```
-
-```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_One_B}
-
+theme_bw() + 
+labs(title="Number of Loans per State")
 
 loanData.grp_borrower_state <-arrange(loanData.grp_borrower_state, desc(LoanOriginalAmount_mean))
-
-writeLines("td, th { padding : 6px } th { background-color : brown ; color : white; border : 1px solid white; } td { color : brown ; border : 1px solid brown }", con = "mystyle.css")
-knitr::kable(loanData.grp_borrower_state, format = "html")
-
 
 ggplot(data = map1, aes(x = long, y = lat, group = group)) +
 geom_polygon(aes(fill = LoanOriginalAmount_mean)) +
@@ -990,80 +1039,112 @@ y     = state.y,
 label = BorrowerState,
 group = NULL), size = 4, colour="white") +
 scale_fill_distiller(palette = "Spectral") +
-theme_bw()
+theme_bw() + 
+labs(title="Amount of money per State")
 
 ```
 
 ### Description One
 
-> I chose these two graphs because they show us that number not always means more quantity. Even though it is important frequency of loans, it is more important amount of money generated by loans.
+> These two maps show us that number of loans not always means more money 
+required. For example, in the first map you can observe that state
+which more number of loans is California (14717 loans), however the state which 
+more amount of money demanded is Texas (9087.326 dollars). These graphs are very
+useful bacause them show in very clear form the difference between number and
+amount of money requiered. This result also could help company to determine what
+kind of strategy marketing they should apply. For example, if company wants to 
+have more number of customers the could develop some strategies in California, 
+but if they want to put more money probably it is a better option to focus in 
+Texas.
 
 ### Plot Two
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_Two}
-# Remove na values
-loandData.numeric.na <- loandData.numeric %>% drop_na()
 
-# Get correlations
-loandData.numeric.cor <- round(cor(loandData.numeric.na),2)
-
-# Display correlations
-#writeLines("table { table-layout: fixed; width: 100%; /* must have this set */; font-size : 6px;} td, th { padding : 1px} th { background-color : brown ; color : white; border : 1px solid white; } td { color : brown ; border : 1px solid brown}", con = "mystyle.css")
-#knitr::kable(loandData.numeric.cor, format = "html")
-loandData.numeric.cor
-
-# Graphics correlations
-corrplot(loandData.numeric.cor, method="square",is.corr=FALSE,type="full", tl.cex=0.5, diag = FALSE, tl.offset = 1, cl.length = 20, col = colorRampPalette(c("midnightblue", "white","darkred"))(100))
+ggplot(data=loanData, aes(ProsperRating..Alpha., EstimatedLoss, fill=ProsperRating..Alpha.)) + 
+  geom_boxplot(outlier.shape = NA) +
+  ylim(0, quantile(loanData$EstimatedLoss, 0.95, na.rm = TRUE)) +
+  labs(title="Prosper Rating vs Estimated Loss") + 
+  xlab("Prosper Rating") + 
+  ylab("Estimated Loss") +
+  guides(fill=guide_legend(title=NULL))
 
 ```
 
 ### Description Two
 
-> I chose this graph because it help us to identify which variables are correlated each other.
+> In this graph, what we can find is that prosper rating decreased while 
+estimated loss increased. It means that the risk is more higher when people have
+low prosper ratings. This relationship can also be validated if we calculate the 
+coefficient of correlation between these two variables (-0.9641819). Moreover,
+this graph is helpful because it provides a useful way to visualise the range 
+and other characteristics of responses for a large group.
 
 ### Plot Three
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_Three}
 
-loanData.tempo <- loanData %>%
-  filter(!is.na(EmploymentStatusDuration))
+loanData.ListingCategory <- loanData %>%
+  filter(!is.na(ListingCategory..numeric.))
 
-qplot(x = EmploymentStatusDuration, y = MonthlyLoanPayment , data = loanData.tempo)
-
-
-loanData.grp_term_empStatus <- loanData %>%
-  filter(!is.na(EmploymentStatusDuration)) %>%
-  group_by(Term, EmploymentStatusDuration) %>%
+loanData.grp_term_ListingCategory <- loanData %>%
+  filter(!is.na(ListingCategory..numeric.)) %>%
+  group_by(Term, ListingCategory..numeric.) %>%
   summarize(MonthlyLoanPayment_mean = mean(MonthlyLoanPayment),
           MonthlyLoanPayment_median = median(MonthlyLoanPayment),
           n = n()) %>%
   ungroup() %>%
   arrange(Term)
 
-ggplot(aes(x = EmploymentStatusDuration, y = MonthlyLoanPayment_mean), data = loanData.grp_term_empStatus) + geom_line(aes(color = Term )) +
-   xlim(0, quantile(loanData$EmploymentStatusDuration, 0.95, na.rm = TRUE)) +
-   ylim(0, quantile(loanData$MonthlyLoanPayment_mean, 0.95, na.rm = TRUE))
 
+ggplot(aes(x = ListingCategory..numeric., y = MonthlyLoanPayment_mean), data = loanData.grp_term_ListingCategory) + geom_line(aes(color = Term ), stat = "summary", fun.y = median) +
+   xlim(0, quantile(loanData$ListingCategory..numeric., 0.95, na.rm = TRUE))  + 
+   xlab("Listing Category") + 
+   ylab("Monthly Loan Payment - dollars") +
+   labs(title="Listing Category vs Monthly Payment")
 
-ggplot(aes(x = EmploymentStatusDuration, y = MonthlyLoanPayment_mean), data = loanData.grp_term_empStatus) + geom_line(aes(color = Term ), stat = "summary", fun.y = median) +
-   xlim(0, quantile(loanData$EmploymentStatusDuration, 0.95, na.rm = TRUE))
 ```
 
 ### Description Three
 
-> I chose this graph because it shows that the MonthlyLoanPayment month mean increase according with the EmploymentStatusDuration, however the term no depends of the amount on MonthlyLoanPayment or EmploymentStatusDuration.
+> What we can see in this graph is that Monthly Payment is higher when the Term
+of paying is lower. This means that Monthly Payment is higher when Term is 12 
+months no matter which kind of category is the loan. Also, we can see that 
+Monthtly Payment is also higher when Term is 60 months. What it is important in
+this graph is the ease with which it allows you to see how three variables
+interacts each other.
 
 ------
   
-  # Reflection
+# Reflection
   
-  * To make a good analysis it is important to know about the business, meet how the process is, and what each variable means.
+  * To make a good analysis it is important to know about the business, meet how 
+  the process is, and know what each variable means. If a person does not have 
+  much experience in this field the time to analyze data could growth 
+  exponentially, the analisys could not be precise, and the result could be 
+  wrong. In my case, I had troubles selecting the variables and building 
+  logical relationships between them. What I did to fix this issue was read 
+  about the business, and try to use helpful tools to help me in my analys. One
+  of this tool which corrplot which helped me to identify relationships in less 
+  time.
   
-  * It is important to know when each tool should be used to obtain value from the data. 
-  
-  * Most of the time, the data should be prepared and some additionally variables are needed.
-  
-  * Always is better to use a graph to describe sitautions.
-  
-  * Related to the data, in each graph I describe what I found.
-  
+  * After this work, I hope to gain more experience using r not just for EDA but
+  also to predict things. I want to learn how to apply machine learning 
+  algorithms with r. Also, I want to analyze different data set to gain more
+  skills using r.
+
+
+-------
+# References
+
+* https://goo.gl/LvVMBT
+* https://goo.gl/ubgAf8
+* https://goo.gl/vL5mr5
+* https://goo.gl/pzhULM
+* https://goo.gl/gfkrmQ
+* https://goo.gl/tsTZhp
+* https://goo.gl/b3NFsw
+
+
+
+
