@@ -193,7 +193,7 @@ data(state)
 states <- data.frame(state.abb, state.name, state.area, state.center, 
                      state.division, state.region, state.x77)
 
-states <- rename(states, c("x"          = "state.x", 
+states <- rename(states, c("x" = "state.x", 
 "y"          = "state.y", 
 "Population" = "state.population",
 "Income"     = "state.income",
@@ -221,15 +221,15 @@ geom_polygon() +
 geom_path(colour = 'gray', linestyle = 2) + 
 coord_map() +
 # state.x and state.y = center of each state, where we plot its abbreviation
-geom_text(data = states, aes(x     = state.x, 
+geom_text(data = states, aes(x = state.x, 
 y     = state.y, 
 label = BorrowerState,
 group = NULL), 
 size = 4, 
-colour="white") +
+colour = "white") +
 # us loans
 geom_jitter(data=loanData,aes(x=state.x, y=state.y, group=NULL), 
-            colour="yellow",alpha=0.8 ) 
+            colour = "yellow", alpha=0.8 ) 
 
 ```
 
@@ -270,10 +270,10 @@ ggplot(data = map1, aes(x = long, y = lat, group = group)) +
 geom_polygon(aes(fill = n)) +
 coord_map() +
 # state.x and state.y = center of each state, where we plot its abbreviation
-geom_text(data = states, aes(x     = state.x, 
-y     = state.y, 
+geom_text(data = states, aes(x = state.x, 
+y = state.y, 
 label = BorrowerState,
-group = NULL), size = 4, colour="white") +
+group = NULL), size = 4, colour = "white") +
 scale_fill_distiller(palette = "Spectral") +
 theme_bw()
 ```
@@ -300,10 +300,10 @@ ggplot(data = map1, aes(x = long, y = lat, group = group)) +
 geom_polygon(aes(fill = LoanOriginalAmount_mean)) +
 coord_map() +
 # state.x and state.y = center of each state, where we plot its abbreviation
-geom_text(data = states, aes(x     = state.x, 
-y     = state.y, 
+geom_text(data = states, aes(x = state.x, 
+y = state.y, 
 label = BorrowerState,
-group = NULL), size = 4, colour="white") +
+group = NULL), size = 4, colour = "white") +
 scale_fill_distiller(palette = "Spectral") +
 theme_bw()
 
@@ -346,8 +346,8 @@ need money not for a specific reason like Holidays.
 
 qplot(data = loanData, x = ListingCreationMonth, color = I('black'), 
       fill = I('#00ccff')) + 
-  scale_x_discrete(breaks=1:12) +
-  facet_wrap(~ListingCreationYear, ncol=3)
+  scale_x_discrete(breaks = 1:12) +
+  facet_wrap(~ListingCreationYear, ncol = 3)
 
 ```
 
@@ -359,8 +359,8 @@ behavior in the days of each month.
 
 qplot(data = loanData, x = ListingCreationDay, color = I('black'), 
       fill = I('#00ccff')) + 
-  scale_x_discrete(breaks=01:31) +
-  facet_wrap(~ListingCreationMonth, ncol=3)
+  scale_x_discrete(breaks = 01:31) +
+  facet_wrap(~ListingCreationMonth, ncol = 3)
 
 ```
 
@@ -389,13 +389,13 @@ this variable. Considering the next result, the most important categories are:
 
 qplot(data = loanData, x = ListingCategory..numeric., binwidth = 1, 
       color = I('black'), fill = I('#00ccff')) + 
-  scale_x_continuous(breaks=0:20) +
-  facet_wrap(~ListingCreationYear, ncol=3) +
+  scale_x_continuous(breaks = 0:20) +
+  facet_wrap(~ListingCreationYear, ncol = 3) +
   xlim(0, quantile(loanData$ListingCategory..numeric., 0.95)) 
 
 qplot(data = loanData, x = ListingCategory..numeric., binwidth = 1, 
       color = I('black'), fill = I('#00ccff')) + 
-  scale_x_continuous(breaks=0:20) +
+  scale_x_continuous(breaks = 0:20) +
   facet_grid(Term ~ .) +
   xlim(0, quantile(loanData$ListingCategory..numeric., 0.95)) 
 
@@ -491,12 +491,13 @@ higher loan amount result in  higher monthly payment.
 ```{r echo=FALSE, message=FALSE, warning=FALSE, LoanOriginalAmountMonthlyLoanPayment}
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
-  geom_point() + 
+  geom_jitter(alpha = 1/20) +  
   xlim(1000, quantile(loanData$LoanOriginalAmount, 0.95)) + 
   ylim(0, quantile(loanData$MonthlyLoanPayment, 0.95)) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment")
+
 
 # Strong positive correlation
 with(loanData, cor.test(LoanOriginalAmount, MonthlyLoanPayment, 
@@ -512,7 +513,7 @@ higher number of investors.
 ```{r echo=FALSE, message=FALSE, warning=FALSE, LoanOriginalAmountInvestors}
 
 ggplot(aes(x = LoanOriginalAmount, y = Investors), data = loanData) +
-  geom_point() + 
+  geom_jitter(alpha = 1/20) +   
   xlim(1000, quantile(loanData$LoanOriginalAmount, 0.95)) + 
   ylim(0, quantile(loanData$Investors, 0.95)) +
   geom_smooth(method = 'lm', color = 'red') +
@@ -532,7 +533,7 @@ are very close to 0.
 
 ggplot(aes(x = EstimatedReturn, y = Investors), 
        data = subset(loanData,!is.na(EstimatedReturn) & !is.na(Investors))) +
-  geom_point() + 
+  geom_jitter(alpha = 1/20) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("EstimatedReturn") + 
   ylab("Investors")
@@ -550,7 +551,7 @@ are very close to 0.
 
 ggplot(aes(x = LoanOriginalAmount, y = EmploymentStatusDuration), 
        data = loanData) +
-  geom_point() + 
+  geom_jitter(alpha = 1/20) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("LoanOriginalAmount") + 
   ylab("EmploymentStatusDuration")
@@ -567,7 +568,7 @@ are very close to 0.
 ```{r echo=FALSE, message=FALSE, warning=FALSE, BankcardUtilizationLoanOriginalAmount}
 
 ggplot(aes(x = LoanOriginalAmount, y = BankcardUtilization), data = loanData) +
-  geom_point() + 
+  geom_jitter(alpha = 1/20) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("LoanOriginalAmount") + 
   ylab("BankcardUtilization")
@@ -613,9 +614,9 @@ loandData.numeric.na <- loandData.numeric %>% drop_na()
 loandData.numeric.cor <- round(cor(loandData.numeric.na),2)
 
 # Graphics correlations
-corrplot(loandData.numeric.cor, method="square",is.corr=FALSE,type="full", 
-         tl.cex=0.5, diag = FALSE, tl.offset = 1, cl.length = 20, 
-         col = colorRampPalette(c("midnightblue", "white","darkred"))(100))
+corrplot(loandData.numeric.cor, method = "square", is.corr = FALSE, type="full", 
+         tl.cex = 0.5, diag = FALSE, tl.offset = 1, cl.length = 20, 
+         col = colorRampPalette(c("midnightblue", "white", "darkred"))(100))
 
 ```
 
@@ -730,14 +731,13 @@ ggplot(data=loanData, aes(loanData$ProsperRating..Alpha.,
                           loanData$EstimatedLoss)) + 
   geom_boxplot() 
 
-ggplot(data=loanData, aes(ProsperRating..Alpha., EstimatedLoss, 
-                          fill=ProsperRating..Alpha.)) + 
+ggplot(data=loanData, aes(ProsperRating..Alpha., EstimatedLoss)) + 
   geom_boxplot(outlier.shape = NA) +
   ylim(0, quantile(loanData$EstimatedLoss, 0.95, na.rm = TRUE)) +
-  labs(title="Prosper Rating vs Estimated Loss") + 
+  labs(title = "Prosper Rating vs Estimated Loss") + 
   xlab("Prosper Rating") + 
-  ylab("Estimated Loss") +
-  guides(fill=guide_legend(title=NULL))
+  ylab("Estimated Loss") #+
+  #guides(fill=guide_legend(title=NULL))
 
 
 # Strong positive correlation
@@ -829,7 +829,7 @@ loanData$Term <- factor(loanData$Term, levels=c(12,36,60), ordered=TRUE)
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = Term)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="Loan Original Amount vs Monthly Loan Payment")
+  theme_bw() + labs(title = "Loan Original Amount vs Monthly Loan Payment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = Term)) + 
@@ -838,7 +838,7 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() + labs(title="Loan Original Amount vs Monthly Loan Payment")
+  theme_bw() + labs(title = "Loan Original Amount vs Monthly Loan Payment")
 
 ```
 
@@ -851,7 +851,7 @@ number of them have a full time jobs.
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = EmploymentStatus)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
+  theme_bw() + labs(title = "LoanOriginalAmount vs MonthlyLoanPayment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = EmploymentStatus)) + 
@@ -860,7 +860,7 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
+  theme_bw() + labs(title = "LoanOriginalAmount vs MonthlyLoanPayment")
 
 ```
 
@@ -873,7 +873,7 @@ an important number which are currently opened.
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = LoanStatus)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
+  theme_bw() + labs(title = "LoanOriginalAmount vs MonthlyLoanPayment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = LoanStatus)) + 
@@ -882,7 +882,7 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
+  theme_bw() + labs(title = "LoanOriginalAmount vs MonthlyLoanPayment")
 
 ```
 
@@ -895,7 +895,7 @@ B which means that the portfolio of the company does not have a higher risk.
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = ProsperRating..Alpha.)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
+  theme_bw() + labs(title = "LoanOriginalAmount vs MonthlyLoanPayment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = ProsperRating..Alpha.)) + 
@@ -904,7 +904,7 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
+  theme_bw() + labs(title = "LoanOriginalAmount vs MonthlyLoanPayment")
 
 ```
 
@@ -917,7 +917,7 @@ a loan is around $25000 to $75000.
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = IncomeRange)) + 
   xlim(1000, 35000) +
-  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
+  theme_bw() + labs(title = "LoanOriginalAmount vs MonthlyLoanPayment")
 
 ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_point(aes(color = IncomeRange)) + 
@@ -926,7 +926,7 @@ ggplot(aes(x = LoanOriginalAmount, y = MonthlyLoanPayment), data = loanData) +
   geom_smooth(method = 'lm', color = 'red') +
   xlab("Loan Original Amount") + 
   ylab("Monthly Loan Payment") +
-  theme_bw() + labs(title="LoanOriginalAmount vs MonthlyLoanPayment")
+  theme_bw() + labs(title = "LoanOriginalAmount vs MonthlyLoanPayment")
 
 ```
 
@@ -955,7 +955,7 @@ ggplot(aes(x = EmploymentStatusDuration, y = MonthlyLoanPayment_mean),
    ylim(0, quantile(loanData$MonthlyLoanPayment_mean, 0.95, na.rm = TRUE)) + 
   xlab("Employment Status Duration") + 
   ylab("Monthly Loan Payment") +
-  labs(title="Employment Status Duration vs Monthly Loan Payment")
+  labs(title = "Employment Status Duration vs Monthly Loan Payment")
 
 ```
 
@@ -986,7 +986,7 @@ ggplot(aes(x = ListingCategory..numeric., y = MonthlyLoanPayment_mean), data = l
    xlim(0, quantile(loanData$ListingCategory..numeric., 0.95, na.rm = TRUE))  + 
    xlab("Listing Category") + 
    ylab("Monthly Loan Payment") +
-   labs(title="Listing Category vs Monthly Payment")
+   labs(title = "Listing Category vs Monthly Payment")
 
 ggplot(aes(x = ListingCategory..numeric., y = MonthlyLoanPayment_mean, fill=Term), 
        data = loanData.grp_term_ListingCategory) + 
@@ -994,7 +994,7 @@ ggplot(aes(x = ListingCategory..numeric., y = MonthlyLoanPayment_mean, fill=Term
     xlim(0, quantile(loanData$ListingCategory..numeric., 0.95, na.rm = TRUE))  + 
    xlab("Listing Category") + 
    ylab("Monthly Loan Payment - USD") +
-   labs(title="Listing Category vs Monthly Payment", fill = "Term - months") 
+   labs(title = "Listing Category vs Monthly Payment", fill = "Term - months") 
 
 
 ```
@@ -1043,7 +1043,7 @@ loanData.grp_borrower_state <- loanData.grp_borrower_state[1:5,]
 
 map1 <- map_data("state")
 map1 <- merge(map1, loanData.grp_borrower_state, by.x = c("region"), 
-by.y=c("state.name"), all.x=TRUE)
+by.y = c("state.name"), all.x=TRUE)
 map1 <- arrange(map1, order)
 
 # Build one graph
@@ -1051,13 +1051,14 @@ ggplot(data = map1, aes(x = long, y = lat, group = group)) +
 geom_polygon(aes(fill = n)) +
 coord_map() +
 # state.x and state.y = center of each state, where we plot its abbreviation
-geom_text(data = states, aes(x     = state.x, 
-y     = state.y, 
+geom_text(data = states, aes(x = state.x, 
+y = state.y, 
 label = BorrowerState,
-group = NULL), size = 4, colour="white") +
+group = NULL), size = 4, colour = "white") +
 scale_fill_distiller(palette = "Spectral") +
 theme_bw() + 
-labs(title="Number of Loans per State")
+labs(title="Number of Loans per State", fill = "Loan Original Mean - Number")
+
 
 loanData.grp_borrower_state <-arrange(loanData.grp_borrower_state, 
                                       desc(LoanOriginalAmount_mean))
@@ -1066,13 +1067,14 @@ ggplot(data = map1, aes(x = long, y = lat, group = group)) +
 geom_polygon(aes(fill = LoanOriginalAmount_mean)) +
 coord_map() +
 # state.x and state.y = center of each state, where we plot its abbreviation
-geom_text(data = states, aes(x     = state.x, 
-y     = state.y, 
+geom_text(data = states, aes(x = state.x, 
+y = state.y, 
 label = BorrowerState,
-group = NULL), size = 4, colour="white") +
+group = NULL), size = 4, colour = "white") +
 scale_fill_distiller(palette = "Spectral") +
 theme_bw() + 
-labs(title="Amount of money per State")
+labs(title = "Amount of money per State", fill = "Loan Original Mean - USD.")
+
 
 ```
 
@@ -1093,14 +1095,12 @@ Texas.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_Two}
 
-ggplot(data=loanData, aes(ProsperRating..Alpha., EstimatedLoss, 
-                          fill=ProsperRating..Alpha.)) + 
+ggplot(data=loanData, aes(ProsperRating..Alpha., EstimatedLoss)) + 
   geom_boxplot(outlier.shape = NA) +
   ylim(0, quantile(loanData$EstimatedLoss, 0.95, na.rm = TRUE)) +
-  labs(title="Prosper Rating vs Estimated Loss") + 
+  labs(title = "Prosper Rating vs Estimated Loss") + 
   xlab("Prosper Rating") + 
-  ylab("Estimated Loss") +
-  guides(fill=guide_legend(title=NULL))
+  ylab("Estimated Loss") 
 
 ```
 
@@ -1137,7 +1137,7 @@ ggplot(aes(x = ListingCategory..numeric., y = MonthlyLoanPayment_mean),
    xlim(0, quantile(loanData$ListingCategory..numeric., 0.95, na.rm = TRUE))  + 
    xlab("Listing Category") + 
    ylab("Monthly Loan Payment - USD") +
-   labs(title="Listing Category vs Monthly Payment", color = "Term - months") 
+   labs(title = "Listing Category vs Monthly Payment", color = "Term - months") 
 
 ```
 
